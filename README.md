@@ -6,7 +6,6 @@ Designed for stability under load using Redis caching, API-key/IP rotation (via 
 # 1. Setup
 Prerequisites
 
-- Node.js 20+
 - Docker & Docker Compose (for the containerized run)
 - A ScraperAPI account (or similar smart proxy); you’ll need one or more API keys.
 - Redis (will be started by Docker Compose)
