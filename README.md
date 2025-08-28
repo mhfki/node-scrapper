@@ -6,9 +6,8 @@ Designed for stability under load using Redis caching, API-key/IP rotation (via 
 # 1. Setup
 Prerequisites
 
-- Docker & Docker Compose (for the containerized run)
-- A ScraperAPI account (or similar smart proxy); you’ll need one or more API keys.
-- Redis (will be started by Docker Compose)
+- Docker & Docker Compose
+- A ScraperAPI account; you’ll need one or more API keys.
 
 Create .env in the project root (example values below):
 ```
