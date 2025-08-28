@@ -41,6 +41,17 @@ const buildScraperUrl = (targetUrl, apiKey) =>
 
 const keyCache = (h) => `sc:cache:${h}`;
 
+function makeCacheKey(targetUrl) {
+  try {
+    const u = new URL(targetUrl);
+    u.hash = '';                       // ignore fragment
+    u.searchParams.sort();             // canonicalize query order
+    return keyCache(sha1(`${COUNTRY_CODE}|${u.toString()}`));
+  } catch {
+    return keyCache(sha1(`${COUNTRY_CODE}|${targetUrl}`));
+  }
+}
+
 /** ===== Throttler (global) ===== */
 const limiter = new Bottleneck({
   minTime: +THROTTLE_MIN_MS,               // minimum spacing between jobs
@@ -75,7 +86,7 @@ async function fetchWithRetry(apiUrl, MAX_RETRIES = 1, BASE_DELAY = 600) {
 async function getWithCache(targetUrl) {
   const apiKey = getApiKey();
   const apiUrl = buildScraperUrl(targetUrl, apiKey);
-  const cacheKey = keyCache(sha1(apiUrl));
+  const cacheKey = makeCacheKey(targetUrl);
 
   // 1) Cache hit
   const hit = await redis.get(cacheKey);
